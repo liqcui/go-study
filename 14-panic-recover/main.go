@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func funcA() {
 	fmt.Println("func a")
@@ -13,7 +15,12 @@ func funcB() {
 		fmt.Println(err)
 		fmt.Println("Free the database connection ...")
 	}()
-	panic("Disaster error")
+
+	timeDurationSec := 20
+	if timeDurationSec <= 30 {
+		//errors.New("specify the value of timeDurationSec great than 30")
+		panic("ERROR: specify the value of timeDurationSec great than 30 for CheckAllNodepoolReadyByHostedClusterName")
+	}
 	fmt.Println("func b")
 }
 

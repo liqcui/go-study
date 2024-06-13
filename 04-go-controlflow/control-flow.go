@@ -99,4 +99,36 @@ func main() {
 		fmt.Println(s1 == s2)
 	}
 
+	for i := 4; i > 0; i-- {
+		fmt.Println(i)
+	}
+
+	workerNodes := []string{"a", "e", "f"}
+	masterNodes := []string{"a"}
+	matchCount := 0
+	for i := 0; i < len(workerNodes); i++ {
+		for j := 0; j < len(masterNodes); j++ {
+			if workerNodes[i] == masterNodes[j] {
+				matchCount++
+			}
+		}
+	}
+	fmt.Println(matchCount)
+	i := 0
+	for { //相当于while true
+		if i < 10 {
+			fmt.Println(i)
+		} else {
+			break
+		}
+		i++
+	}
+}
+
+func is3Master() bool {
+	if true {
+		return true
+	}
+	return false
+
 }

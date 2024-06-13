@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -132,4 +133,64 @@ func main() {
 		fmt.Println(jsonpathstr)
 
 	}
+	//ProcessNum()
+
+	endPointStr := `Endpoints:         [fd01:0:0:1::11]:60000`
+	endPointStr1 := strings.ReplaceAll(endPointStr, "         ", ",")
+	endPointStrArr := strings.Split(endPointStr1, ",")
+	fmt.Println(endPointStrArr[1])
+
+	fmt.Println(strconv.Itoa(3))
+	str10 := "00020"
+	if strings.HasPrefix(str10, "0") {
+		fmt.Println(strings.TrimLeft(str10, "0"))
+	}
+
+	stalldStdOut := `Aug 04 13:45:05 ip-10-0-16-195 systemd[1]: Starting Stall Monitor...
+	Aug 04 13:45:05 ip-10-0-16-195 systemd[1]: Started Stall Monitor.
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: lockdown mode is off
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: /sys/kernel/debug/sched/features exists
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: /sys/kernel/debug/sched/debug exists
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: boosted pid 0 (undef) using SCHED_DEADLINE
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: using SCHED_DEADLINE for boosting
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: initial config_buffer_size set to 286720
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: detected new task format
+	Aug 04 13:45:05 ip-10-0-16-195 stalld[239426]: single threaded mode`
+
+	exp := regexp.MustCompile(`\[.*?\]`)
+
+	// Matches would contain a slice of all successive matching text
+	// based on the regular expression.
+	matches := exp.FindAllString(stalldStdOut, -1)
+	fmt.Println("All matches : " + strings.Join(matches, " "))
+	nodeName := "worker01"
+	debugNodeNamespace := "nto"
+	cmd := []string{"ps", "-ef"}
+	cargs := []string{"node/" + nodeName + "--", "chroot", "/host"}
+	cargs = []string{"node/" + nodeName, "--to-namespace=" + debugNodeNamespace, "--", "chroot", "/host"}
+	cargs = append(cargs, cmd...)
+	fmt.Println(cargs[:])
+
+	time1 := "05:37"
+	minSec := strings.Split(time1, ":")
+	timeMin := minSec[0]
+	if strings.HasPrefix(timeMin, "0") {
+		timeMin = strings.TrimLeft(timeMin, "0")
+	}
+	fmt.Println(timeMin)
+
+	findStr := fmt.Sprintf(`find /sys/class/net -type l -not -lname *virtual* -a -not -name enP*" -printf %%f"\n"`)
+	fmt.Println(findStr)
+
+	xxx := 4
+	a := strconv.Itoa(xxx)
+	fmt.Println(a)
+	masterNodeNamesStr := `node/maxu-ibm-xjnnk-master-0
+	node/maxu-ibm-xjnnk-master-1
+	node/maxu-ibm-xjnnk-master-2`
+	// masterNodeNames := strings.Trim(masterNodeNamesStr, "'")
+	masterNodeNamesArray := strings.Split(masterNodeNamesStr, "\n")
+	firstMasterNodeName := strings.Split(masterNodeNamesArray[0], "/")
+	fmt.Println(masterNodeNamesArray[0])
+	fmt.Println(firstMasterNodeName[1])
 }

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: probe-detectd
+  labels:
+    app: probe-detectd
+spec:
+  selector:
+    matchLabels:
+      app: probe-detectd
+  template:
+    metadata:
+      labels:
+        app: probe-detectd
+    spec:
+      containers:
+      - name: probe-detectd
+        image: quay.io/openshift-psap-qe/ubi9-minimal
+        command: ["/usr/bin/nc"]
+        args: ["-l","-p","8080"]
+        securityContext:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL        
+        ports:
+        - containerPort: 8080
+        startupProbe:
+        httpGet:
+            path: /
+            port: 80
+        periodSeconds: 10
+        failureThreshold: 10        
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10                 
+        resources:
+          limits:
+            cpu: 250m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 512Mi

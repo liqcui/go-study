@@ -93,5 +93,7 @@ func main() {
 	string1 := "nodepool.hypershift.openshift.io/psap-qe-gcluster01-us-east-2a nodepool.hypershift.openshift.io/psap-qe-gcluster02-us-east-2a"
 	reg1 := regexp.MustCompile(".*psap-qe-gcluster02.*")
 	nodepoolName := reg1.FindAllString(string1, -1)
+	nodepoolName2 := reg1.FindString(string1)
 	fmt.Println(nodepoolName[0])
+	fmt.Println(nodepoolName2)
 }

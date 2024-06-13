@@ -175,6 +175,8 @@ func main() {
 	fmt.Printf("%04b & %04b = %04b\n", 15, 8, 15&8)
 	fmt.Printf("%04b | %04b = %04b\n", 15, 8, 15|8)
 
+	fmt.Printf("3/5 = %d", 3/5)
+
 }
 
 // 二进制转十六进制

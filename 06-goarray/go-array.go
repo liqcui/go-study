@@ -112,6 +112,7 @@ func main() {
 	for _, v := range paoDeployOCPVersionList {
 		fmt.Println(v)
 	}
+	appendArray()
 
 }
 
@@ -150,4 +151,22 @@ func TestArrayPointer(t *testing.T) {
 	if a[1] != 4 && a[2] != 9 {
 		t.Fatal("failed")
 	}
+}
+
+func appendArray() {
+	machinesets := "aaab aaab ccc ddd aaab eee ffff"
+	var regularMachineset []string
+	machinesetsArray := strings.Split(machinesets, " ")
+	//Remove windows machineset
+	for i, machineset := range machinesetsArray {
+		fmt.Printf("%v: %T<---->%v\n", i, machineset, machineset)
+
+		if strings.Contains(machineset, "windows") || strings.Contains(machineset, "edge") || strings.Contains(machineset, "aaab") {
+			continue
+		}
+		regularMachineset = append(regularMachineset, machineset)
+		fmt.Printf("windows or edge is %T,%v\n", regularMachineset, regularMachineset)
+
+	}
+	fmt.Printf("regularMachineset is %v\n", regularMachineset)
 }

@@ -1,0 +1,5 @@
+[root@ocpadmin-tools ~]# worker_node=ip-10-0-9-39.us-east-2.compute.internal
+[root@ocpadmin-tools ~]# oc get node $worker_node -ojsonpath='{.spec.providerID}{"\n"}'
+aws:///us-east-2a/i-0689c15ef28b2e29c
+oc -n openshift-cluster-node-tuning-operator get profile $worker_node -ojsonpath='{.spec.config.providerName}{"\n"}'
+aws

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 )
@@ -52,5 +54,30 @@ func main() {
 	os.Clearenv()
 
 	fmt.Println("Number of environment variables: ", len(os.Environ()))
+
+	SHARED_DIR, isFound := os.LookupEnv("SHARED_DIR")
+
+	fmt.Printf("SHARED_DIR is %s and isFound is %v\n", SHARED_DIR, isFound)
+	a := "abcd1244"
+	fmt.Printf("%d\n", len(a))
+
+	os.Setenv("SHARED_DIR", "/tmp/")
+
+	SHARED_DIR = os.Getenv("SHARED_DIR")
+
+	if len(SHARED_DIR) != 0 {
+		fmt.Println("SHARED_DIR was found ")
+		byteArray, err := ioutil.ReadFile(SHARED_DIR + "/cluster-type")
+		if err != nil {
+			log.Fatalf("Unable to read file: %v", err)
+		}
+		clusterType := string(byteArray)
+		clusterType = strings.ToLower(clusterType)
+		if strings.Contains(clusterType, "rosa") {
+			return true
+		}
+	} else {
+		fmt.Println("No SHARED_DIR was found")
+	}
 
 }
